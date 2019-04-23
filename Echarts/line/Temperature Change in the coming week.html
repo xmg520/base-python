@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en" style="height: 100%">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" src="../js/echarts.min.js"></script>
+    <script type="text/javascript" src="../js/jquery-3.3.1.js"></script>
+</head>
+<body style="height: 100%;margin: 0">
+<div id="contar" style="height: 100%"></div>
+
+<script type="text/javascript">
+    var dom = document.getElementById("contar");
+    var myChart = echarts.init(dom);
+
+    option = null;
+
+    option = {
+        title:{
+            text:'未来一周气温变',
+            subtext:'纯属虚构'
+        },
+        tooltip:{
+            trigger:'axis'
+        },
+        xAxis:{
+            type:'category',
+            boundaryGap: false ,
+            data:['周一','周二','周三','周四','周五','周六','周日']
+        },
+        yAxis:{
+            type:'value',
+            axisLabel:{ //设置y坐标 输出格式
+                format:'{value} 度'
+            }
+        },
+        series:[
+            {
+                name:'最高气温',
+                type:'line',
+                data:[11, 11, 15, 13, 12, 13, 10],
+                markPoint:{ //设置点描述样式
+                    data:[
+                        //根据type 描述的 作用条件 来定位点 name 表示点描述
+                        {type:'max',name:'最大值'},
+                        {type:'min',name:'最小值'}
+                    ]
+                },
+                markLine:{ // 横坐标线样式设置
+                    data:[
+                        {type:'average',name:'平均值'}
+                    ]
+                }
+
+            },
+            {
+                name:'最低气温',
+                type:'line',
+                data:[1, -2, 2, 5, 3, 2, 0],
+                markPoint:{
+                    data:[
+                        {type:'max',name:'最大值'},
+                        {type:'min',name:'最小值'}
+                    ]
+                },
+                markLine:{
+                    data:[
+                        {type:'average',name:'平均值'},
+                        [
+                            {
+                                symbol:'none',
+                                x:'90%',//离开坐标点的长百分度
+                                yAxis:'max'
+                            },
+                            {
+                                symbol:'circle',
+                                label:{
+                                    normal:{
+                                        position:'start',
+                                        formatter:'最大值'
+                                    }
+                                },
+                                type:'max',
+                                name:'最高点'
+                            }
+                        ]
+                    ]
+                }
+            }
+        ]
+    }
+
+    if(option && typeof option === "object"){
+        myChart.setOption(option,true);
+    }
+</script>
+</body>
+</html>

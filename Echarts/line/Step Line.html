@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" style="height: 100%">
+<head>
+    <meta charset="UTF-8">
+    <title>Step Line</title>
+    <script type="text/javascript" src="../js/jquery-3.3.1.js"></script>
+    <script type="text/javascript" src="../js/echarts.min.js"></script>
+</head>
+<body style="height: 100%;margin: 0;">
+
+<div id="contar" style="height: 100%;margin: 0;"></div>
+
+<script type="text/javascript" >
+    var dom = document.getElementById("contar");
+    var myChart = echarts.init(dom);
+
+    option = null;
+
+    option = {
+        title:{
+            text:'Stp Line'
+        },
+        tooltip:{
+          trigger:'axis',
+          axisPointer:{
+              type:'cross',
+              label:{
+                  backgroundColor:'#6a7985'
+              }
+
+          }
+        },
+        legend:{
+            data:['Step Start', 'Step Middle', 'Step End']
+        },
+        toolbox:{
+            feature:{
+                saveAsImage: {}
+            }
+        },
+        xAxis:{
+            type:'category',
+            boundaryGap:false,
+            data:['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+        },
+        yAxis:{
+            type:'value'
+        },
+        series:[
+            {
+                name:'Step Start',
+                type:'line',
+                step:'start',
+                data:[120, 132, 101, 134, 90, 230, 210]
+            },
+            {
+                name:'Step Middle',
+                type:'line',
+                step:'middle',
+                data:[220, 282, 201, 234, 290, 430, 410]
+            },
+            {
+                name:'Step End',
+                type:'line',
+                step:'end',
+                data:[450, 432, 401, 454, 590, 530, 510]
+            }
+        ]
+    }
+
+    if(option && typeof option === "object"){
+        myChart.setOption(option,true)
+    }
+</script>
+
+</body>
+</html>

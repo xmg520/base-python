@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" style="height: 100%">
+<head>
+    <meta charset="UTF-8">
+    <title>World Total Population</title>
+    <script type="text/javascript" src="../js/jquery-3.3.1.js"></script>
+    <script type="text/javascript" src="../js/echarts.min.js"></script>
+</head>
+<body style="height: 100%;margin: 0">
+
+<div id="contar" style="height: 100%"></div>
+
+<script type="text/javascript">
+    dom = document.getElementById("contar");
+    myChat = echarts.init(dom);
+
+    option = {
+        title:{
+            text:'测试'
+        },
+        legend:{
+          data:[]
+        },
+        xAxis:{
+            type:'value'
+        },
+        yAxis:{
+
+        },
+        series:[
+            {
+        
+            }
+        ]
+    }
+
+    myChat.setOption(option)
+</script>
+
+</body>
+</html>

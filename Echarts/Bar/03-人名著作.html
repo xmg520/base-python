@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" style="height: 100%">
+<head>
+    <meta charset="UTF-8">
+    <title>中国古诗文</title>
+    <script type="text/javascript" src="../js/jquery-3.3.1.js"></script>
+    <script type="text/javascript" src="../js/echarts.min.js"></script>
+</head>
+<body style="height: 100%;margin: 0;">
+
+<div id="contar" style="height: 100%"></div>
+
+<script type="text/javascript">
+    var dom = document.getElementById("contar");
+    var myChart = echarts.init(dom);
+
+    nams = []
+    works = []
+
+    $.ajax({
+        url:'http://localhost:8081/api/getWorkTest.do',
+        type:'GET',
+        dataType:'json',
+        success:function(data){
+            $.each(data.first,function(i,item){
+                nams.push(item.name);
+                works.push(item.works);
+            })
+            showdata();
+        }
+    })
+
+    option = null;
+    function showdata(){
+        option = {
+            xAxis:{
+                type:'category',
+                boundaryGap:[0,0.01],
+                name:'作者',
+                axisLabel:{
+                    interval:0
+                },
+                data:[],
+                axisLabel:{
+                    interval:0,//横轴信息全部显示
+                    rotate:-30,//-30度角倾斜显示
+                }
+            },
+            yAxis:{
+                type:'value',
+                name:'文章数'
+            },
+            series:[{
+                data:[],
+                type:'bar'
+            }],
+            dataZoom:{
+			      realtime:true, //拖动滚动条时是否动态的更新图表数据
+			      height:25,//滚动条高度
+			      start:40,//滚动条开始位置（共100等份）
+			      end:65//结束位置（共100等份）
+            }
+        }
+
+        option.xAxis.data = nams;
+        option.series[0].data = works;
+
+        if(option && typeof option === "object"){
+            myChart.setOption(option,true);
+        }
+    }
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" style="height: 100%">
+<head>
+    <meta charset="UTF-8">
+    <title>Basic area chart</title>
+    <script type="text/javascript" src="../js/jquery-3.3.1.js"></script>
+    <script type="text/javascript" src="../js/echarts.min.js"></script>
+</head>
+<body style="height: 100%;margin: 0">
+<div id="contar" style="height: 100%"></div>
+
+<script type="text/javascript">
+    dom = document.getElementById('contar');
+    myChat = echarts.init(dom);
+
+    option = {
+        title:{
+            text:'标题'
+        },
+        xAxis:{
+            type:'category',
+            data:['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+            boundaryGap:false
+        },
+        yAxis:{
+            type:'value'
+        },
+        series:[
+            {
+                type:'line',
+                data:[820, 932, 901, 934, 1290, 1330, 1320],
+                areaStyle:{}
+            }
+        ]
+    }
+
+    myChat.setOption(option)
+
+</script>
+</body>
+</html>

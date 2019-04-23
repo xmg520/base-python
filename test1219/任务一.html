@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en" style="height: 100%">
+<head>
+    <meta charset="UTF-8">
+    <title>任务一可视化</title>
+    <script type="text/javascript" src="./js/jquery-3.3.1.js"></script>
+    <script type="text/javascript" src="./js/echarts.min.js"></script>
+</head>
+<body style="height: 100%;margin: 0">
+    <div id="contar1" style="height: 100%"></div>
+    <div id="contar2" style="height: 100%"></div>
+    <div id="contar3" style="height: 100%"></div>
+    <script type="text/javascript">
+        dom1 = document.getElementById("contar1");
+        dom2 = document.getElementById("contar2");
+        dom3 = document.getElementById("contar3");
+        myChart1 = echarts.init(dom1);
+        myChart2 = echarts.init(dom2);
+        myChart3 = echarts.init(dom3);
+
+        datas1 = [];
+        datas2 = [];
+        datas3 = [];
+        datas4 = [];
+        datas5 = [];
+        datas6 = [];
+
+        // ajax异步请求获取各手机品牌销量数据
+        $.ajax({
+            url:'http://localhost:8081/api/getCountlist.do',
+            type:'get',
+            dataType:'json',
+            success:function(data){//通过异步请求给变量赋值，并调用图表显示方法
+                $.each(data.first,function(i,item){
+                    datas1.push(item.name);
+                    datas2.push(item.count);
+                });
+                //异步请求加载赋值完毕，调用图表显示方法
+                showdata1();
+            }
+        });
+        // ajax异步请求获取各颜色喜爱数据
+        $.ajax({
+            url:'http://localhost:8081/api/getColorlist.do',
+            type:'get',
+            dataType:'json',
+            success:function(data){
+                $.each(data.first,function(i,item){//通过异步请求给变量赋值，并调用图表显示方法
+                    datas3.push(item.color);
+                    datas4.push(item.count);
+                });
+                //异步请求加载赋值完毕，调用图表显示方法
+                showdata2();
+            }
+        });
+        // ajax异步请求获取各手机尺寸销量数据
+        $.ajax({
+            url:'http://localhost:8081/api/getSizelist.do',
+            type:'get',
+            dataType:'json',
+            success:function(data){
+                $.each(data.first,function(i,item){//通过异步请求给变量赋值，并调用图表显示方法
+                    datas5.push(item.size+'寸');
+                    strV = {value:item['count'],name:item.size+'寸'}
+                    datas6.push(strV);
+                });
+                //异步请求加载赋值完毕，调用图表显示方法
+                showdata3();
+            }
+        });
+
+
+        option1 = null;
+        option2 = null;
+        option3 = null;
+
+        function showdata1(){
+            option1 = {
+                // 为图一设置标题
+                title:{
+                  text:'各品牌手机销量对比图'
+                },
+                xAxis:{
+                    type:'category',
+                    //设置x轴数据
+                    data:[],
+                    // 设置坐标轴样式
+                    axisLabel:{
+                        interval:0,//显示所有数据
+                        rotate:-30//倾斜三十度
+                    }
+                },
+                yAxis:{
+                    //设置y坐标轴值随着数据值的大小而变化
+                    type:'value'
+                },
+                series:[
+                    {
+                        //设置图表为柱状图
+                        type:'bar',
+                        //为图表添加数据
+                        data:[]
+                    }
+                ]
+            };
+            //将异步请求完的数据赋值为图表各参数
+            option1.xAxis.data = datas1; // 设置x坐标参数
+            option1.series[0].data = datas2; // 设置图表数据
+
+            //向页面提交生成图表
+            myChart1.setOption(option1,true);
+
+        }
+    function showdata2() {
+        option2 = {
+                // 为图二设置标题
+                title:{
+                  text:'大众手机颜色选择购买图'
+                },
+                xAxis:{
+                    type:'category',
+                    //设置x轴数据
+                    data:[]
+                },
+                yAxis:{
+                    //设置y坐标轴值随着数据值的大小而变化
+                    type:'value'
+                },
+                series:[
+                    {
+                        //设置图表为折线图
+                        type:'line',
+                        //为图表添加数据
+                        data:[],
+                        //标出折线图表示的最大值与最小值
+                        markPoint:{
+                            data:[
+                                {type:'max',name:'最大值'},//最大值点
+                                {type:'min',name:'最小值'}//最小值点
+                            ]
+                        }
+
+                    }
+                ]
+            };
+
+        //将异步请求完的数据赋值为图表各参数
+        option2.xAxis.data = datas3;// 设置x坐标参数
+        option2.series[0].data = datas4; // 设置图表数据
+        //向页面提交生成图表
+        myChart2.setOption(option2,true);
+    }
+    
+    function showdata3() {
+        option3 = {
+            // 为图三设置标题
+            title:{
+              text:'大众手机尺寸选择购买图'
+            },
+            legend:{
+                //设置头部文件数据
+              data:[]
+            },
+            series:[
+                {
+                    //设置图表为饼状图
+                    type:'pie',
+                    //为图表添加数据
+                    data:[]
+                }
+            ]
+        };
+
+        //将异步请求完的数据赋值为图表各参数
+        option3.legend.data = datas5;// 设置x坐标参数
+        option3.series[0].data = datas6; // 设置图表数据
+        //向页面提交生成图表
+        myChart3.setOption(option3,true);
+    }
+
+    </script>
+
+</body>
+</html>

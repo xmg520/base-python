@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html style="height: 100%">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <!--导入echarts 文件-->
+    <script src="../js/echarts.min.js"></script>
+    <script src="../js/jquery-3.3.1.js"></script>
+</head>
+<body>
+
+    <!-- 为 ECharts 准备一个具备大小的DOM -->
+    <div id="main" style="width: 600px;height: 400px"></div>
+
+    <script type="text/javascript">
+        // 基于准备好的 DOM 初始化 echarts实例
+        var myChart = echarts.init(document.getElementById("main"));
+
+        //指定图表的配置项和数据
+
+        var option = {
+            // title 标题
+            title:{
+                text:'ECharts '
+            },
+            tooltip:{},
+            legend:{
+                data:['销量']
+            },
+            xAxis:{
+                data:["毛衣","皮衣","皮裤","围巾"]
+            },
+            yAxis:{},
+            series:[{
+                name:'销量',
+                type:'bar',
+                data:[322,521,786,221]
+            }]
+
+        };
+
+        myChart.setOption(option);
+
+    </script>
+</body>
+</html>

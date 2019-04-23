@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" style="height: 100%">
+<head>
+    <meta charset="UTF-8">
+    <title>Dynamic Data</title>
+    <script type="text/javascript" src="../js/jquery-3.3.1.js"></script>
+    <script type="text/javascript" src="../js/echarts.min.js"></script>
+</head>
+<body style="height: 100%;margin: 0">
+
+<div id="contar" style="height: 100%"></div>
+
+<script type="text/javascript">
+    dom = document.getElementById("contar");
+    myChart = echarts.init(dom);
+
+    option = {
+        title:{
+          text:'动态数据'
+        },
+        legend:{
+          data:['最新成交价','预购队列']
+        },
+        tooltip:{
+          trigger:'axis',
+          axisPointer:{
+              type:'cross',
+              label:{
+                  backgroundColor:'#2c434c'
+              }
+          }
+        },
+        xAxis:{
+            type:'category',
+            data:['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+        },
+        yAxis:{
+            type:'value'
+        },
+        series:[
+            {
+                name:'预购队列',
+                type:'bar',
+                data:[820, 932, 901, 934, 1290, 1330, 1320]
+            },
+            {
+                name:'最新成交价',
+                type:'line',
+                data:[820, 932, 901, 934, 1290, 1330, 1320]
+            }
+        ]
+    }
+
+    myChart.setOption(option)
+
+</script>
+</body>
+</html>

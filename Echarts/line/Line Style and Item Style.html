@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en"style="height: 100%">
+<head>
+    <meta charset="UTF-8">
+    <title>Line Style and Item Style</title>
+    <script type="text/javascript" src="../js/echarts.min.js"></script>
+    <script type="text/javascript" src="../js/jquery-3.3.1.js"></script>
+</head>
+<body style="height: 100%;margin: 0;">
+
+<div id="contar" style="height: 100%"></div>
+
+<script type="text/javascript">
+    var dom = document.getElementById("contar");
+    var myChart = echarts.init(dom);
+
+    option = null;
+
+    option = {
+        xAxis:{
+            type:'category',
+            data:['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+            boundaryGap:false
+        },
+        yAxis:{
+            type:'value'
+        },
+        series:[
+            {
+                data:[120, 200, 150, 80, 70, 110, 130],
+                type:'line',
+                symbol:'triangle',//设置坐标点形状
+                symbolSize:20,// 设置坐标点大小
+                lineStyle:{ // 设置line线风格
+                    normal:{
+                        color:'green', // 设置折线颜色
+                        width:5, // 设置line粗细
+                        type:'dashed' //设置line样式 此处为 虚线
+                    }
+                },
+                itemStyle:{//设置坐标点风格
+                    normal: {
+                        borderWidth:3,//设置坐标点外围宽度
+                        borderColor:'yellow', //设置坐标点外围颜色
+                        color: 'blue', // 设置坐标点颜色
+                        smooth:true
+                    }
+                }
+            }
+        ]
+    }
+
+    if(option && typeof option === "object"){
+        myChart.setOption(option,true);
+    }
+</script>
+
+</body>
+</html>

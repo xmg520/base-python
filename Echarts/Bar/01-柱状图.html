@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" style="height: 100%">
+<head>
+    <meta charset="UTF-8">
+    <title>柱状图</title>
+    <script type="text/javascript" src="../js/jquery-3.3.1.js"></script>
+    <script type="text/javascript" src="../js/echarts.min.js"></script>
+</head>
+<body style="height: 100%;margin: 0;">
+
+<div id="contar" style="height: 100%"></div>
+
+<script type="text/javascript">
+
+    var dom = document.getElementById("contar");
+    var myChart = echarts.init(dom);
+    option = null;
+
+    option = {
+        xAxis:{
+            type:"category",
+            data:['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+        },
+        yAxis:{
+            type: "value"
+        },
+        series:[{
+            data:[120, 200, 150, 80, 70, 110, 130],
+            type:"bar"
+        }]
+    };
+
+    myChart.setOption(option,true);
+
+</script>
+
+
+
+</body>
+</html>

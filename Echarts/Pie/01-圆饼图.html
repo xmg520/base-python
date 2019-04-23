@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" style="height: 100%">
+<head>
+    <meta charset="UTF-8">
+    <title>18年人气指数排名</title>
+    <script type="text/javascript" src="../js/jquery-3.3.1.js"></script>
+    <script type="text/javascript" src="../js/echarts.min.js"></script>
+</head>
+<body style="height: 100%;margin: 0;">
+    <div id="contar" style="height: 100%"></div>
+    <script type="text/javascript">
+        var dom = document.getElementById("contar");
+        var myChart = echarts.init(dom);
+        var datas = []
+
+        $.ajax({
+            url:'http://localhost:8081/api/getNamelist.do',
+            type:'GET',
+            dataType:'json',
+            success:function (data) {
+                $.each(data.first,function(i,item){
+                    strValue = {value:item['value'],name:item['name']}
+                    datas.push(strValue)
+                })
+                showdata();
+            }
+        })
+
+
+        option = null;
+        function showdata() {
+
+            option = {
+                backgroundColor: '#2c343c',
+              series:[
+                  {
+                      name:'人气指数',
+                      type:'pie',
+                      radius:'70%',
+                      data:[],
+                      roseType: 'angle',
+                      itemStyle: {
+                          normal: {
+                              shadowBlur: 200,
+                              shadowColor: 'rgba(0, 0, 0, 0.5)'
+                          }
+                      }
+                  }
+              ]
+            };
+
+            option.series[0].data = datas;
+
+            if(option && typeof option === "object"){
+                myChart.setOption(option,true)
+            }
+        }
+        
+
+    </script>
+</body>
+</html>

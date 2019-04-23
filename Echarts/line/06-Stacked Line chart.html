@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en" style="height: 100%">
+<head>
+    <meta charset="UTF-8">
+    <title>BasicLineChart</title>
+    <script type="text/javascript" src="../js/echarts.min.js"></script>
+    <script type="text/javascript" src="../js/jquery-3.3.1.js"></script>
+</head>
+<body style="height: 100%">
+
+<div id="contar" style="height: 100%;margin: 0;"></div>
+
+<script type="text/javascript">
+
+
+    var dom = document.getElementById("contar");
+    var myChart = echarts.init(dom);
+
+    option = null;
+
+    option = {
+        title:{
+          text:'折线图堆叠'
+        },
+        tooltip:{ // 鼠标移动坐标轴事件
+          trigger:'axis',//x轴显示移动坐标显示
+          axisPointer: {
+              type:'cross', //y轴显示移动坐标显示
+              label:{ // 改变坐标轴显示背景颜色
+                  backgroundColor:'#6a7985'
+              }
+          }
+        },
+        xAxis:{
+            type:'category',
+            boundaryGap:false,
+            data:['周一','周二','周三','周四','周五','周六','周日']
+        },
+        yAxis:{
+            type:'value'
+        },
+        series:[
+            {
+                name:'邮件营销',
+                type:'line',
+                stack:'总量',
+                data:[120, 132, 101, 134, 90, 230, 210]
+            },
+            {
+                name:'广告来源',
+                type:'line',
+                stack:'总量',
+                data:[220, 182, 191, 234, 290, 330, 310]
+            },
+            {
+                name:'报纸招聘',
+                type:'line',
+                stack:'总量',
+                data:[150, 232, 201, 154, 190, 330, 410]
+            },
+            {
+                name:'直接搜索',
+                type:'line',
+                stack:'总量',
+                data:[320, 332, 301, 334, 390, 330, 320]
+            },
+            {
+                name:'搜索引擎',
+                type:'line',
+                stack:'总量',
+                data:[820, 932, 901, 934, 1290, 1330, 1320]
+            }
+        ],
+          graphic: [
+        {
+            type: 'group',
+            left: '10%',
+            top: 'left',
+            children: [
+                { // 边框效果
+                    type: 'rect',
+                    z: 100,
+                    left: 'center',
+                    top: 'middle',
+                    shape: {
+                        width: 190,
+                        height: 90
+                    },
+                    style: {
+                        fill: '#fff',
+                        stroke: '#555',
+                        lineWidth: 2,
+                        shadowBlur: 8,
+                        shadowOffsetX: 3,
+                        shadowOffsetY: 3,
+                        shadowColor: 'rgba(0,0,0,0.3)'
+                    }
+                },
+                { // 文字特效
+                    type: 'text',
+                    z: 100,
+                    left: 'center',
+                    top: 'middle',
+                    style: {
+                        fill: '#333',
+                        text: [
+                            '横轴表示温度，单位是°C',
+                            '纵轴表示高度，单位是km',
+                            '右上角有一个图片做的水印',
+                            '这个文本块可以放在图中各',
+                            '种位置'
+                        ].join('\n'),
+                        font: '14px Microsoft YaHei'
+                    }
+                }
+            ]
+        }
+      ]
+
+    }
+
+    if(option && typeof option === "object"){
+        myChart.setOption(option,true);
+    }
+
+
+</script>
+</body>
+</html>

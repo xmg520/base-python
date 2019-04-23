@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" style="height: 100%">
+<head>
+    <meta charset="UTF-8">
+    <title>柱状图加接口</title>
+    <script type="text/javascript" src="../js/jquery-3.3.1.js"></script>
+    <script type="text/javascript" src="../js/echarts.min.js"></script>
+</head>
+<body style="height: 100%;margin: 0;">
+
+<div id="contar" style="height: 100%"></div>
+
+<script type="text/javascript">
+
+    var names = [];
+    var nums = [];
+
+    $.ajax({
+        url:"http://localhost:8081/api/getlist.do",
+        type:"GET",
+        dataType:"json",
+        success:function(data){
+            $.each(data.first,function(i,item){
+                names.push(item.name);
+                nums.push(item.num);
+            })
+            showdata();
+        }
+    })
+
+    var dom = document.getElementById("contar");
+    var myChart = echarts.init(dom);
+    option = null;
+
+    function showdata(){
+        option = {
+            xAxis:{
+                type:"category",
+                data:[]
+            },
+            yAxis:{
+                type:"value"
+            },
+            series:[{
+                type:"bar",
+                data:[]
+            }]
+        };
+
+        option.xAxis.data = names;
+        option.series[0].data = nums;
+
+        if(option && typeof option === "object"){
+            myChart.setOption(option,true);
+        }
+    }
+
+</script>
+
+</body>
+</html>

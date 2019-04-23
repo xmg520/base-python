@@ -1,0 +1,3 @@
+#LWP-Cookies-2.0
+Set-Cookie3: bbs_sid=s6q4s5cl9mthpdf6lr6lmncrf3; path="/"; domain="bbs.wyjsjxh.com"; expires="2019-07-09 10:19:37Z"; HttpOnly=None; version=0
+Set-Cookie3: cookie_test=qNFySgkTkL3GxFH2vDRQxZ62iw6yPAy5Ref5DBCGwNQzh1K9; path="/"; domain="bbs.wyjsjxh.com"; expires="2019-04-01 10:19:37Z"; version=0

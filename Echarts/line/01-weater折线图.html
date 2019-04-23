@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" style="height: 100%">
+<head>
+    <meta charset="UTF-8">
+    <title>最低城市温度排行榜</title>
+    <script type="text/javascript" src="../js/jquery-3.3.1.js"></script>
+    <script type="text/javascript" src="../js/echarts.min.js"></script>
+</head>
+<body style="height: 100%">
+
+<div id="contar" style="height: 100%; margin: 0;"></div>
+<script type="text/javascript">
+    var city = [];
+    var temperature = [];
+
+    $.ajax({
+        url:"http://localhost:8081/api/getWeather.do",
+        type:"GET",
+        dataType:"json",
+        success:function(data){
+            $.each(data.first,function(i,item){
+                city.push(item.city)
+                temperature.push(item.temperature)
+            })
+            showdata();
+        }
+    })
+
+    var dom = document.getElementById("contar");
+    var myChart = echarts.init(dom)
+    option = null
+
+    function showdata() {
+        option = {
+            title:{
+
+            },
+            xAxis: {
+                type:"category",
+                data: []
+            },
+            yAxis:{
+                type:"value"
+            },
+            series:[{
+                type:"line",
+                data:[]
+
+            }]
+        }
+
+        option.xAxis.data = city;
+        option.series[0].data = temperature;
+
+        if(option && typeof option === "object"){
+            myChart.setOption(option,true)
+        }
+    }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,74 @@
+<!-- 前端显示代码 -->
+<!DOCTYPE html>
+<html lang="en" style="height: 100%">
+<head>
+    <meta charset="UTF-8">
+    <title>18人气指数排名</title>
+    <!-- 导入jQuery、echats -->
+    <script type="text/javascript" src="../js/jquery-3.3.1.js"></script>
+    <script type="text/javascript" src="../js/echarts.min.js"></script>
+</head>
+<body style="height: 100%;margin: 0;">
+
+<!-- 自定义 div-->
+<div id="contar" style="height: 100%"></div>
+<script type="text/javascript">
+    // 通过jQuery 获取 自定义DIV制作echarts
+    var dom = document.getElementById("contar");
+    var myChar = echarts.init(dom);
+
+    // 自定义列表存储服务端返回数据
+    datas = []
+
+    //通过 ajax进行数据交互
+    $.ajax({
+        url:'http://localhost:8081/api/getNamelist.do',
+        type:'GET',
+        dataType:'json',
+        success:function (data) {
+            $.each(data.first,function(i,item){
+                // 数据拼接
+                valueStr = {value:item['value'],name:item['name']}
+
+                //把拼接完成数据逐个添加到自定义列表中
+                datas.push(valueStr)
+            })
+            // 数据交互完成调用echarts生成图像
+            showdata()
+        }
+    })
+
+
+    option = null
+    function showdata() {
+        option = {
+            backgroundColor:"#2c343c",
+            series:[{
+                name:'人气排行',
+                type:'pie',
+                radius:'70%',
+                data:[],
+                roseType: "angle",
+                itemStyle:{
+                    normal:{
+                        shadowBlur:200,
+                        shadowColor:'rgba(0,0,0,0.5)'
+                    }
+                }
+            }]
+        }
+
+        //通过
+        option.series[0].data = datas;
+
+        if(option && typeof option == "object"){
+            myChar.setOption(option,true)
+        }
+
+    }
+    
+
+</script>
+
+</body>
+</html>

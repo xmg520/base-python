@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en" style="height: 100%">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" src="js/jquery-3.3.1.js"></script>
+    <script type="text/javascript" src="js/echarts.min.js"></script>
+</head>
+<body style="height: 100%;margin: 0">
+
+<div id="contar1" style="height: 100%"></div>
+<div id="contar2" style="height: 100%"></div>
+<div id="contar3" style="height: 100%"></div>
+<div id="contar4" style="height: 100%"></div>
+
+<script type="text/javascript">
+    dataCpuName = [];
+    dataCpu = [];
+    dataRamName = [];
+    dataRamCount = [];
+    dataRomName = [];
+    dataRomCount = [];
+    dataOsName = [];
+    dataOs = [];
+
+    //cpu异步数据请求
+    $.ajax({
+        url:'http://localhost:8081/api/getsalescpu.do',
+        type:'GET',
+        dataType:'json',
+        success:function(data){
+            $.each(data.first,function(i,item){
+                strV = {value:item.fld_sale_count,name:item.fld_cpu_name};
+                dataCpuName.push(item.fld_cpu_name);
+                dataCpu.push(strV)
+            })
+            cpuData()
+        }
+    })
+
+    //ram异步数据请求
+    $.ajax({
+        url:'http://localhost:8081/api/getsalesram.do',
+        type:'GET',
+        dataType:'json',
+        success:function(data){
+            $.each(data.first,function(i,item){
+                dataRamName.push(item.fld_ram_name);
+                dataRamCount.push(item.fld_sale_count);
+            })
+            ramData();
+        }
+    })
+    //rom异步数据请求
+    $.ajax({
+        url:'http://localhost:8081/api/getsalesrom.do',
+        type:'GET',
+        dataType:'json',
+        success:function(data){
+            $.each(data.first,function(i,item){
+                dataRomName.push(item.fld_rom_name);
+                dataRomCount.push(item.fld_sale_count);
+            })
+            romData();
+        }
+    })
+
+    //os异步数据请求
+    $.ajax({
+        url:'http://localhost:8081/api/getsalesos.do',
+        type:'GET',
+        dataType:'json',
+        success:function(data){
+            $.each(data.first,function(i,item){
+                strOs = {value:item.fld_sale_count,name:item.fld_os_name}
+                dataOs.push(strOs)
+                dataOsName.push(item.fld_os_name);
+            })
+            osData()
+        }
+    })
+
+    function cpuData() {
+        var cpuChart = echarts.init(document.getElementById('contar1'));
+        cpuOption = {
+            title:{
+                text:'各cpu手机销售数据'
+            },
+            series:[
+                {
+                    name:'cpu类型',
+                    type:'pie',
+                    data:[]
+                }
+            ]
+        }
+
+        cpuOption.series[0].data = dataCpu;
+        cpuChart.setOption(cpuOption)
+    }
+    function ramData() {
+        var ramChart = echarts.init(document.getElementById('contar2'));
+        ramOption = {
+            title:{
+                text:'各ram手机销售数据'
+            },
+            xAxis:{
+                type:'category',
+                data:[]
+            },
+            yAxis:{
+                type:'value'
+            },
+            series:[
+                {
+                    type:'bar',
+                    data:[]
+                }
+            ]
+
+        }
+
+        ramOption.xAxis.data = dataRamName;
+        ramOption.series[0].data = dataRamCount;
+        ramChart.setOption(ramOption);
+    }
+    function romData() {
+        var romChart = echarts.init(document.getElementById('contar3'));
+
+        romOption = {
+            title:{
+                text:'各rom手机销售数据'
+            },
+            xAxis: {
+                type:'category',
+                data:dataRomName
+            },
+            yAxis: {
+                type:'value'
+            },
+            series:[
+                {
+                    type:'line',
+                    data:dataRomCount
+                }
+            ]
+
+        }
+
+        romChart.setOption(romOption)
+    }
+    function osData() {
+        var osChart = echarts.init(document.getElementById('contar4'));
+        osOption = {
+            title:{
+                text:'各os手机销售数据'
+            },
+            legend:{
+                right:'right',
+                data:dataOsName
+            },
+            series:[
+                {
+                    name:'类型',
+                    type:'pie',
+                    data:dataOs
+                }
+            ]
+        }
+
+        osChart.setOption(osOption)
+    }
+
+</script>
+
+</body>
+</html>

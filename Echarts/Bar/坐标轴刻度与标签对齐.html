@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en" style="height: 100%">
+<head>
+    <meta charset="UTF-8">
+    <title>坐标轴刻度与标签对齐</title>
+    <script type="text/javascript" src="../js/echarts.min.js"></script>
+    <script type="text/javascript" src="../js/jquery-3.3.1.js"></script>
+</head>
+<body style="height: 100%;margin: 0">
+
+<div id="contar" style="height: 100%"></div>
+
+<script type="text/javascript">
+    dom = document.getElementById('contar');
+    myChart = echarts.init(dom);
+
+    option = {
+      backgroundColor:'#2c343c',
+      color:['#3398DB'],
+      title:{
+          text:'测试'
+      },
+      tooltip:{
+        trigger:'axis',
+        axisPointer:{//设置坐标点
+            type:'shadow',
+            // label:{
+            //     backgroundColor:'#2c343c'
+            // }
+        }
+      },
+      xAxis:{
+          type:'category',
+          data:['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+          axisTick:{ //设置坐标点是否对其数值
+              alignWithLabel:true
+          }
+      },
+      yAxis:{
+          type:'value'
+      },
+      series:[
+          {
+              name:'直接访问',
+              type:'bar',
+              radius:'55%',
+              barWidth:'60%',
+              data:[10, 52, 200, 334, 390, 330, 220]
+          }
+      ]
+    };
+
+    myChart.setOption(option)
+</script>
+
+</body>
+</html>

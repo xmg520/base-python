@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en" style="height: 100%">
+<head>
+    <meta charset="UTF-8">
+    <title>三图合一</title>
+    <script type="text/javascript" src="../js/jquery-3.3.1.js"></script>
+    <script type="text/javascript" src="../js/echarts.min.js"></script>
+</head>
+<body style="height: 100%;margin: 0">
+<div id="contar1" style="height: 100%"></div>
+<div id="contar2" style="height: 100%"></div>
+<div id="contar3" style="height: 100%"></div>
+
+<script type="text/javascript" >
+    dom1 = document.getElementById("contar1");
+    dom2 = document.getElementById("contar2");
+    dom3 = document.getElementById("contar3");
+    myChar1 = echarts.init(dom1);
+    myChar2 = echarts.init(dom2);
+    myChar3 = echarts.init(dom3);
+
+    option1 = null;
+    option2 = null;
+    option3 = null;
+
+    option1 = {
+        title:{
+            text:'第一个测试图'
+        },
+        xAxis:{
+          type:'category',
+          data:['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+        },
+        yAxis:{
+            type:'value'
+        },
+        series:[
+            {
+                type:'bar',
+                data:[820, 932, 901, 934, 1290, 1330, 1320]
+            }
+        ]
+    };
+
+    option2 = {
+        title:{
+            title:'第二个测试图'
+        },
+        tooltip:{
+          trigger:'axis',
+          axisPointer:{
+              type:'cross',
+              label:{
+                  backgroundColor:'#6a7985'
+              }
+          }
+        },
+        xAxis:{
+            type:'category',
+            data:['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+        },
+        yAxis:{
+            type:'value'
+        },
+        series:[
+            {
+                type:'line',
+                data:[820, 932, 901, 934, 1290, 1330, 1320]
+            }
+        ]
+    };
+
+    option3 = {
+        title:{
+            text:'第三个测试图'
+        },
+        tooltip:{
+            trigger:'item',
+            formatter:'{a} <br/>{b} :{c} ({d}%)'
+        },
+        legend:{
+            data: ['直接访问','邮件营销','联盟广告','视频广告','搜索引擎']
+        },
+        series:[
+            {
+                name:'访问来源',
+                type:'pie',
+                data:[
+                    {value:335, name:'直接访问'},
+                    {value:310, name:'邮件营销'},
+                    {value:234, name:'联盟广告'},
+                    {value:135, name:'视频广告'},
+                    {value:1548, name:'搜索引擎'}
+                ]
+            }
+        ]
+    }
+
+    if(option1 && option2 && option3 && typeof option1 === "object" && typeof option2 === "object" && typeof option3 === "object"){
+        myChar1.setOption(option1,true);
+        myChar2.setOption(option2,true);
+        myChar3.setOption(option3,true);
+    }
+</script>
+
+
+</body>
+</html>

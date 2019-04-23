@@ -1,0 +1,69 @@
+
+from urllib import request
+from urllib import parse
+
+    urlretrieve函数的用法
+    # request.urlretrieve('https://www.baidu.com/','./downs/baidu.html')
+
+    urlencode函数的用法
+    # params = {'name':'张三','age':18,'greet':'hello world'}
+    # result = parse.urlencode(params)
+    # print(result)
+    #name=%E5%BC%A0%E4%B8%89&age=18&greet=hello+world
+
+    #parse_qs函数的用法
+    params = {'name':'张三','age':18,'greet':'hello world'}
+    qs = parse.urlencode(params)
+    print(qs)
+    request = parse.parse_qs(qs)
+    print(request)
+
+    #response.txt和response.content的区别:
+
+    1.response.content :这个是直接从网络上面抓取的数据，没有经过任何解码，
+    所以是一个bytes类型。其实在硬盘上和在网络上传输的字符串都是bytes类型。
+    2.response.text：这个是str 的数据类型，是requests库，把response.context进行编码的字符串，
+    编码需要指定一个编码方式，requests会根据自己的猜测来判断编码的方式，
+    所以有时候会猜测错误，就会导致编码产生乱码，
+    这时候就应该使用response.context.decode('utf-8')
+
+    #发送POST请求:
+    发送post请求非常简单，直接调用 'requests.post'方法就可以了。
+    如果返回的是json数据。那么可以调用'response.json()'方法来把json字符串类型 转换成 字典形式
+
+    ## 使用lxml解析HTML代码
+    1. 解析HTML字符串：使用'lxml.etree.HTML'进行解析 , 示例代码如下:
+     ""
+            htmlElement = etree.HTML(text)
+            print(etree.tostring(htmlElement,encoding='utf-8').decode('utf-8'))
+     ""
+
+     2.解析html文件：使用'lxml.etree.parse' 进行解析，示例代码如下：
+     ""
+      htmlElement = etree.parse("lagou.html")
+      print(etree.tostring(htmlElement, encoding='utf-8').decode('utf-8'))
+
+     ""
+     这个函数默认使用的是'xml'解析器，所以如果碰到一些不规范的'html'代码的时候就会解析错误，这时候就要自己创建'html'解析器
+     ""
+        parser = etree.HTMLParser(encoding='utf-8')
+        htmlElement = etree.parse('lagou.html',parser=parser)
+        print(etree.tostring(htmlElement,encoding='utf-8').decode('utf-8'))
+
+     ""
+
+     ##lxml使用xpath注意事项
+     1.使用'xpath'语法，应该使用'Elment.xpath'
+     方法来执行xpath的选择，如：
+     trs = html.xpath('//tr[position()>1]')
+
+     'xpath'函数返回的永远是一个列表。
+     2. 获取某个标签的属性
+     href = html.xpath('//a/@href')
+
+     3.获取文本可以通过 xpath 中的 text() 函数
+     address = tr.xpath('./td[4]/text()')
+
+     4. 在某个标签下，在执行xpath函数，在获取这个标签下的子孙元素
+        # 那么应该在//之前加一个点 . 代表是在当前元素下获取
+        href = tr.xpath(".//a/@href")[0]

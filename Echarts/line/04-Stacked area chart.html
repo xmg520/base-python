@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en" style="height: 100%">
+<head>
+    <meta charset="UTF-8">
+    <title>BasicLineChart</title>
+    <script type="text/javascript" src="../js/echarts.min.js"></script>
+    <script type="text/javascript" src="../js/jquery-3.3.1.js"></script>
+</head>
+<body style="height: 100%">
+
+<div id="contar" style="height: 100%;margin: 0;"></div>
+
+<script type="text/javascript">
+    names = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+    datas = [820, 932, 901, 934, 1290, 1330, 1320]
+
+    var dom = document.getElementById("contar");
+    var myChart = echarts.init(dom);
+
+    option = null;
+
+    option = {
+        title:{//页面标题
+            text:'折线图'
+        },
+        tooltip:{//十字坐标轴
+            trigger:'axis', //x轴
+            axisPointer:{ //y轴
+                type:'cross',
+                label:{ //y轴显示背景颜色
+                    backgroundColor:'#6a7985'
+                }
+            }
+        },
+        legend:{ //标题点文字提升
+            data:['公益广告','社区广告','报纸广告','百度百科']
+        },
+        toolbox:{//下载按钮
+            feature:{
+                saveAsImage:{}
+            }
+        },
+        grid:{//限制大小
+          left:'3%',
+          right:'4%',
+          bottom:'3%',
+          containLabel:true
+        },
+        xAxis:{
+            type:'category',
+            boundaryGap:false,//数据从x轴零点开始
+            data:[]
+        },
+        yAxis:{
+            type:'value'
+        },
+        series:[
+            {
+                name:'公益广告',
+                type:'line',
+                stack:'总量',
+                data:[],
+                areaStyle:{normal:{}}//加减渐变图
+            },
+            {
+                name:'社区广告',
+                type:'line',
+                stack:'总量',
+                data:[220, 182, 191, 234, 290, 330, 310],
+                areaStyle:{normal:{}}//加减渐变图
+            },
+            {
+                name:'报纸广告',
+                type:'line',
+                stack:'总量',
+                data:[320, 332, 301, 334, 390, 450, 600],
+                areaStyle:{normal:{}}//加减渐变图
+            },
+            {
+                type:'line',
+                name:'百度百科',
+                stack:'总量',
+                label: {
+                    normal:{
+                        show:true,
+                        position:'top'
+                    }
+                },
+                areaStyle:{normal:{}},
+                data:[1000, 1332, 1401, 1434, 1690, 1730, 1920],
+            }
+        ]
+    }
+
+    option.xAxis.data = names;
+    option.series[0].data = datas;
+
+    if(option && typeof option === "object"){
+        myChart.setOption(option,true);
+    }
+</script>
+</body>
+</html>

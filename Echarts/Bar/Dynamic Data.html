@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" style="height: 100%">
+<head>
+    <meta charset="UTF-8">
+    <title>Dynamic Data</title>
+    <script type="text/javascript" src="../js/jquery-3.3.1.js"></script>
+    <script type="text/javascript" src="../js/echarts.min.js"></script>
+</head>
+<body style="height: 100%;margin: 0">
+
+<div id="contar" style="height: 100%"></div>
+<script type="text/javascript">
+    dom = document.getElementById("contar");
+    myChart = echarts.init(dom);
+
+    option = null;
+
+    option = {
+        title:{
+            text:'测试'
+        },
+        legend:{
+          data:['蒸发量','降水量'],
+        },
+        tooltip:{
+          trigger:'axis',
+          axisPointer:{
+              type:'cross',
+              label:{
+                  backgroundColor:'286c78'
+              }
+          }
+        },
+        xAxis:{
+            type:'category',
+            data:['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月']
+        },
+        yAxis:{
+            type:'value'
+        },
+        series:[
+            {
+                name:'降水量',
+                type:'bar',
+                data:[2.0, 4.9, 7.0, 23.2, 25.6, 76.7, 135.6, 162.2, 32.6, 20.0, 6.4, 3.3]
+            },
+            {
+                name:'蒸发量',
+                type:'line',
+                data:[2.6, 5.9, 9.0, 26.4, 28.7, 70.7, 175.6, 182.2, 48.7, 18.8, 6.0, 2.3]
+            }
+        ]
+    }
+
+    myChart.setOption(option,true);
+
+</script>
+</body>
+</html>
